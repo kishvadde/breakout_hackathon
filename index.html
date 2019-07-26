@@ -9,78 +9,7 @@
 <body>
     <canvas>Your browser does not seem to support
         HTML5 canvas.</canvas>
-    <script>
-        function getRenderingContext() {
-  var canvas = document.querySelector("canvas");
-  canvas.width = window.innerWidth;
-   canvas.height = window.innerHeight;
-  var gl = canvas.getContext("webgl")
-    || canvas.getContext("experimental-webgl");
-  if (!gl) {
-    var paragraph = document.querySelector("p");
-    paragraph.innerHTML = "Failed to get WebGL context."
-      + "Your browser or device may not support WebGL.";
-    return null;
-  }
-  gl.viewport(0, 0,
-    gl.drawingBufferWidth, gl.drawingBufferHeight);
-  
-  return gl;
-}
 
-
-
-const gl = getRenderingContext()
-
-gl.enable(gl.SCISSOR_TEST);
-
-let x = (gl.drawingBufferWidth/2) - 50;
-let velocity = 0;
-const paddleSpeed = 20;
-
-// set the scissor rectangle
-// gl.scissor(x, 20, 50, 50);
-// gl.clearColor(1, 1, 0.0, 1.0);
-// gl.clear(gl.COLOR_BUFFER_BIT);
-
-const render = ()=>{
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.enable(gl.SCISSOR_TEST);
-  gl.scissor(x, 30, 100, 20);
-  gl.clearColor(1, 1, 0.0, 1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.disable(gl.SCISSOR_TEST);
-
- if (x+velocity<= 0 || x+velocity >= gl.drawingBufferWidth - 100){
-    velocity = 0;
- }
- x+=velocity;
-};
-
-
-setInterval(render, 17);
-
-
-document.onkeydown = checkKey;
-document.onkeyup = ()=>{
-    velocity = 0;
-}
-
-function checkKey(e) {
-
-    e = e || window.event;
-
-    if (e.keyCode == '37') {
-       velocity = -paddleSpeed;
-    }
-    else if (e.keyCode == '39') {
-        velocity = paddleSpeed;
-    }
-
-}
-
-
-    </script>
+    <script src="./src/app.js"></script>
 </body>
 </html>
